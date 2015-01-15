@@ -38,7 +38,6 @@ Exit the virtualenv and reactivate it to activate the settings just changed::
 Create the Postgres database and run the initial syncdb/migrate::
 
     createdb -E UTF-8 offlinedatacollector
-    python manage.py syncdb
     python manage.py migrate
 
 You should now be able to run the development server::
