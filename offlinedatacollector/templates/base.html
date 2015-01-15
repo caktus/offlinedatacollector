@@ -29,6 +29,8 @@
     </div>
     {% compress js %}
     <script src="{% static 'libs/jquery.js' %}"></script>
+    <script src="{% static 'libs/underscore.js' %}"></script>
+    <script src="{% static 'libs/backbone.js' %}"></script>
     <script src="{% static 'js/site.js' %}"></script>
     {% endcompress %}
     {% block extra-js %}{% endblock %}
