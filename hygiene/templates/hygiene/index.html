@@ -1,1 +1,26 @@
 {% extends "base.html" %}
+
+{% load staticfiles compress %}
+
+{% block content %}
+<form id="login" action="{% url 'api-token' %}" method="post">
+    <label for="id_username">Username</label>
+    <input id="id_username" type="text" name="username" maxlength="30" required />
+    <label for="id_password">Password</label>
+    <input id="id_password" type="password" name="password" required />
+    <button type="submit">Login</button>
+</form>
+{% endblock %}
+
+
+{% block extra-js %}
+    <script id="config" type="text/json">
+        {
+            "api": "{% url 'api-root' %}"
+        }
+    </script>
+    {% compress js %}
+    <script src="{% static 'hygiene/js/app.js' %}"></script>
+    <script src="{% static 'hygiene/js/views.js' %}"></script>
+    {% endcompress %}
+{% endblock %}
