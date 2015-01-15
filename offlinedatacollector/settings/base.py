@@ -127,6 +127,7 @@ INSTALLED_APPS = (
     # External apps
     'compressor',
     'rest_framework',
+    'rest_framework.authtoken',
     # Internal apps
     'hygiene',
 )
