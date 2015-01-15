@@ -1,3 +1,4 @@
+/* global jQuery, Backbone, _, config */
 (function ($, Backbone, _, config) {
 
     config.views = {};
@@ -20,7 +21,6 @@
         },
         login: function (result) {
             this.trigger('login', result.token);
-            console.log(result);
             this.$el.hide();
         },
         fail: function () {

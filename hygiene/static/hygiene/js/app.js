@@ -1,3 +1,4 @@
+/* global jQuery, Backbone, _ */
 var config = (function ($, Backbone, _) {
 
     $(document).ready(function () {
