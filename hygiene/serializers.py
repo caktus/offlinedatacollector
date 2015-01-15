@@ -25,4 +25,3 @@ class CleaningSerializer(HATEOASMixin, serializers.ModelSerializer):
     class Meta:
         model = models.Cleaning
         fields = ('user', 'completed', )
-
