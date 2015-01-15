@@ -126,6 +126,8 @@ INSTALLED_APPS = (
     'django.contrib.sitemaps',
     # External apps
     'compressor',
+    'rest_framework',
+    # Internal apps
     'hygiene',
 )
 
@@ -179,3 +181,23 @@ LOGGING = {
 COMPRESS_PRECOMPILERS = (
     ('text/less', 'lessc {infile} {outfile}'),
 )
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.DjangoObjectPermissions',
+    ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'rest_framework.filters.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',
+        'rest_framework.filters.OrderingFilter',
+    ),
+    'PAGINATE_BY': 50,
+    'PAGINATE_BY_PARAM': 'page_size',
+    'MAX_PAGINATE_BY': 200,
+    'SEARCH_PARAM': 'q',
+    'ORDERING_PARAM': 'order_by',
+}
