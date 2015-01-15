@@ -5,8 +5,10 @@ from django.contrib import admin
 
 from rest_framework.routers import DefaultRouter
 
-router = DefaultRouter(trailing_slash=False)
+from hygiene import api
 
+router = DefaultRouter(trailing_slash=False)
+router.register(r'cleanings', api.CleaningViewSet)
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
