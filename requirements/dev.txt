@@ -10,6 +10,8 @@ pyflakes==0.8.1
 pep8==1.5.7
 mccabe==0.3
 
+selenium==2.44.0
+
 # Required for deployment but don't work on Python 3
 # PyYAML==3.10
 # Fabric==1.8.2
