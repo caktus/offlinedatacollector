@@ -1,0 +1,11 @@
+{% spaceless %}
+CACHE MANIFEST
+# rev {{ revision }}
+FALLBACK:
+/ /static/offline.html
+NETWORK:
+*
+CACHE:
+{% for cache in cache_list %}{{ cache }}
+{% endfor %}
+{% endspaceless %}
