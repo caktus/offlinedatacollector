@@ -38,6 +38,9 @@
             this._previous = response.previous;
             this._count = response.count;
             return response.results || [];
+        },
+        currentStreak: function () {
+            return 4;
         }
     });
 

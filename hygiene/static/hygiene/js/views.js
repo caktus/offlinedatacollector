@@ -59,17 +59,19 @@
 
     config.views.ResultsView = Backbone.View.extend({
         el: '#results',
+        template: _.template('<%- count %> day<% if (count !== 1) { %>s<% } %>'),
         initialize: function () {
             this.listenTo(this.collection, 'add', this.maybeRender);
         },
         maybeRender: function (model) {
-            console.log(model);
-            console.log(model.isToday());
             if (model.isToday()) {
                 this.render();
             }
         },
         render: function () {
+            var context = {count: this.collection.currentStreak()},
+                html = this.template(context);
+            $('.streak', this.$el).html(html);
             this.$el.show();
         }
     });
