@@ -8,6 +8,7 @@ UNDERSCORE_VERSION = 1.7.0
 BACKBONE_VERSION = 1.1.2
 LESSHAT_VERSION = 3.0.2
 OFFLINE_VERSION = 0.7.11
+DUAL_STORAGE_VERSION = 1.3.1
 
 default: lint test
 
@@ -66,6 +67,11 @@ $(STATIC_LIBS_DIR)/lesshat.less: $(STATIC_LIBS_DIR)
 	wget https://raw.githubusercontent.com/madebysource/lesshat/v${LESSHAT_VERSION}/build/lesshat.less -O $@
 
 LIBS += $(STATIC_LIBS_DIR)/lesshat.less
+
+$(STATIC_LIBS_DIR)/backbone.dualstorage.js: $(STATIC_LIBS_DIR)
+	wget https://raw.githubusercontent.com/nilbus/Backbone.dualStorage/v${DUAL_STORAGE_VERSION}/backbone.dualstorage.js -O $@
+
+LIBS += $(STATIC_LIBS_DIR)/backbone.dualstorage.js
 
 update-static-libs: $(LIBS)
 
