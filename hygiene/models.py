@@ -13,3 +13,6 @@ class Cleaning(models.Model):
         default=False
     )
     date = models.DateField(default=datetime.date.today)
+
+    class Meta:
+        unique_together = ('user', 'date', )
