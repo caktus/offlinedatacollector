@@ -1,0 +1,23 @@
+language: python
+
+python:
+  - "3.4"
+
+env:
+  - DJANGO_SETTINGS_MODULE="offlinedatacollector.settings.dev"
+
+install:
+  - pip install -r requirements/dev.txt
+  - npm install less@2.1.0
+
+before_script:
+  - createdb -E UTF-8 -U postgres -O $USER offlinedatacollector
+
+script:
+  - coverage run manage.py test
+  - coverage report -m --fail-under 80
+  - flake8 .
+
+branches:
+  only:
+    - master
