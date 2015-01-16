@@ -10,10 +10,10 @@
         },
         submit: function (e) {
             e.preventDefault();
-            var data = JSON.stringify({
+            var data = {
                 username: $(':input[name="username"]', this.$el).val(),
                 password: $(':input[name="password"]', this.$el).val(),
-            });
+            };
             $('.error', this.$el).remove();
             $.post(this.$el.attr('action'), data)
                 .done($.proxy(this.login, this))
