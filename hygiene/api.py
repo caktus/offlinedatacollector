@@ -4,7 +4,7 @@ from . import models, serializers
 
 
 class CleaningViewSet(viewsets.ModelViewSet):
-    """BREAD operations for team members."""
+    """BREAD operations for cleaning records."""
 
     model = models.Cleaning
     serializer_class = serializers.CleaningSerializer
