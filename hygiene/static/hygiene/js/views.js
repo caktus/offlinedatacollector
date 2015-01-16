@@ -51,7 +51,6 @@
                     completed: button.attr('name') === 'yes'
                 };
             this.collection.create(attributes, {
-                wait: true,
                 success: $.proxy(this.success, this),
                 error: $.proxy(this.failure, this)
             });
