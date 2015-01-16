@@ -1,11 +1,16 @@
 /* global jQuery, Backbone, _, config */
 (function ($, Backbone, _, config) {
 
+    function getTodayString() {
+        var today = new Date();
+        return today.toISOString().replace(/T.*/g, '');
+    }
+
     var Cleaning = Backbone.Model.extend({
         defaults: function () {
             var today = new Date();
             return {
-                date: today.toISOString().replace(/T.*/g, '')
+                date: getTodayString()
             };
         },
         url: function () {
@@ -15,6 +20,12 @@
                 url = Backbone.Model.prototype.url.call(this);
             }
             return url;
+        },
+        date: function () {
+            return new Date(this.get('date'));
+        },
+        isToday: function () {
+            return this.get('date') === getTodayString();
         }
     });
 

@@ -59,6 +59,16 @@
 
     config.views.ResultsView = Backbone.View.extend({
         el: '#results',
+        initialize: function () {
+            this.listenTo(this.collection, 'add', this.maybeRender);
+        },
+        maybeRender: function (model) {
+            console.log(model);
+            console.log(model.isToday());
+            if (model.isToday()) {
+                this.render();
+            }
+        },
         render: function () {
             this.$el.show();
         }
