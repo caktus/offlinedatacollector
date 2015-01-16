@@ -2,13 +2,16 @@
 var config = (function ($, Backbone, _) {
 
     $(document).ready(function () {
-        var loginView = new config.views.LoginView();
+        var loginView = new config.views.LoginView(),
+            formView = new config.views.QuestionFormView(),
+            resultsView = new config.views.ResultsView();
 
         loginView.on('login', function (token) {
             $.ajaxPrefilter(function (settings, options, xhr) {
                 xhr.setRequestHeader('Authorization', 'Bearer ' + token);
             });
-            // TODO: Render the question
+            // TODO: Determine if question or results should be shown
+            formView.render();
         });
     });
 

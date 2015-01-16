@@ -12,7 +12,7 @@
             e.preventDefault();
             var data = {
                 username: $(':input[name="username"]', this.$el).val(),
-                password: $(':input[name="password"]', this.$el).val(),
+                password: $(':input[name="password"]', this.$el).val()
             };
             $('.error', this.$el).remove();
             $.post(this.$el.attr('action'), data)
@@ -25,6 +25,20 @@
         },
         fail: function () {
             this.$el.prepend('<p class="error">Invalid username/password</p>');
+        }
+    });
+
+    config.views.QuestionFormView = Backbone.View.extend({
+        el: '#collect',
+        render: function () {
+            this.$el.show();
+        }
+    });
+
+    config.views.ResultsView = Backbone.View.extend({
+        el: '#results',
+        render: function () {
+            this.$el.show();
         }
     });
 
