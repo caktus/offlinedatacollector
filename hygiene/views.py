@@ -24,7 +24,7 @@ def cache_manifest(request):
     cache_folder = settings.COMPRESS_OUTPUT_DIR
     for folder in [item for sublist in storage.listdir(cache_folder) for item in sublist]:
         asset_prefix = os.path.join(cache_folder, folder)
-        if os.path.isdir(asset_prefix):
+        if os.path.isdir(os.path.join(settings.STATIC_ROOT, asset_prefix)):
             # Example 2 deep asset
             # CACHE/css/asset.css
             for item in [item for sublist in storage.listdir(asset_prefix) for item in sublist]:
