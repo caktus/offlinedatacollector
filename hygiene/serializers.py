@@ -26,3 +26,14 @@ class CleaningSerializer(HATEOASMixin, serializers.ModelSerializer):
     class Meta:
         model = models.Cleaning
         fields = ('id', 'completed', 'date', 'links', )
+
+    def validate_date(self, value):
+        """Validate date/user uniqueness."""
+        
+        request = self.context['request']
+        qs = models.Cleaning.objects.filter(user=request.user, date=value)
+        if self.instance and self.instance.pk:
+            qs = qs.exclude(pk=self.instance.pk)
+        if qs.exists():
+            raise serializers.ValidationError('Record for this date already exists.')
+        return value

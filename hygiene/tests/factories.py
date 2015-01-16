@@ -1,3 +1,4 @@
+import datetime
 import factory
 import factory.fuzzy
 
@@ -32,3 +33,13 @@ class UserFactory(factory.django.DjangoModelFactory):
             setattr(user, key, value)
         user.save(update_fields=kwargs.keys())
         return user
+
+
+class CleaningFactory(factory.django.DjangoModelFactory):
+
+    class Meta:
+        model = models.Cleaning
+
+    user = factory.SubFactory(UserFactory)
+    completed = True
+    date = factory.fuzzy.FuzzyDate(datetime.date.today() - datetime.timedelta(days=100))
