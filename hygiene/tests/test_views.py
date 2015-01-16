@@ -1,3 +1,4 @@
+import os
 import shutil
 import tempfile
 
@@ -11,6 +12,7 @@ class TempDirectoryMixin(object):
     def setUp(self):
         super(TempDirectoryMixin, self).setUp()
         self.temp_dir = tempfile.mkdtemp()
+        os.mkdir(os.path.join(self.temp_dir, 'CACHE'))
 
     def tearDown(self):
         super(TempDirectoryMixin, self).tearDown()
@@ -20,7 +22,8 @@ class TempDirectoryMixin(object):
 
 class CacheManifextTestCase(TempDirectoryMixin, TestCase):
     def test_get_page(self):
-        """Audit detail"""
         with self.assertTemplateUsed('hygiene/manifest.appcache'):
-            with self.settings(LOGIN_URL=self.temp_dir):
-                self.client.get(reverse('cache-manifest'))
+            with self.settings(COMPRESS_ROOT=self.temp_dir):
+                response = self.client.get(reverse('cache-manifest'))
+                self.assertEqual(200, response.status_code)
+                self.assertEqual('text/cache-manifest', response['Content-Type'])
