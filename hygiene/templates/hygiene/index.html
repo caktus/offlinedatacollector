@@ -11,7 +11,9 @@
         <button type="submit">Login</button>
     </form>
     <div id="collect">
-        <p>TODO: Render the question form.</p>
+        <h3>Did you clean today?</h3>
+        <button name="yes">Yes</button>
+        <button name="no">No</button>
     </div>
     <div id="results">
         <p>TODO: Render the current results.</p>
@@ -21,11 +23,12 @@
 {% block extra-js %}
     <script id="config" type="text/json">
         {
-            "api": "{% url 'api-root' %}"
+            "api": "{% url 'cleaning-list' %}"
         }
     </script>
     {% compress js %}
     <script src="{% static 'hygiene/js/app.js' %}"></script>
+    <script src="{% static 'hygiene/js/models.js' %}"></script>
     <script src="{% static 'hygiene/js/views.js' %}"></script>
     {% endcompress %}
 {% endblock %}

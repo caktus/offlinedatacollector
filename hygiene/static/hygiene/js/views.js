@@ -30,8 +30,30 @@
 
     config.views.QuestionFormView = Backbone.View.extend({
         el: '#collect',
+        events: {
+            'click button': 'submit'
+        },
+        submit: function (e) {
+            e.preventDefault();
+            var button = $(e.currentTarget),
+                attributes = {
+                    completed: button.attr('name') === 'yes'
+                };
+            this.collection.create(attributes, {
+                wait: true,
+                success: $.proxy(this.success, this),
+                error: $.proxy(this.failure, this)
+            });
+        },
         render: function () {
             this.$el.show();
+        },
+        success: function (model) {
+            // TODO: Add messaging to the user
+            this.$el.hide();
+        },
+        failure: function () {
+            // TODO: Client messed up and is trying to create duplicate.
         }
     });
 
