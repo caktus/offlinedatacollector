@@ -44,12 +44,15 @@
             this._count = response.count;
             return response.results || [];
         },
+        getForDate: function (date) {
+            return this.findWhere({date: getDatePart(date)});
+        },
         currentStreak: function () {
             var streak = 0,
                 found = true,
                 current = new Date();
             while (found) {
-                found = this.findWhere({date: getDatePart(current)});
+                found = this.getForDate(current);
                 if (found) {
                     if (found.get('completed')) {
                         streak = streak + 1;
