@@ -39,9 +39,6 @@
     <script src="{% static 'libs/backbone.dualstorage.js' %}"></script>
     <script src="{% static 'libs/offline.min.js' %}"></script>
     <script src="{% static 'js/site.js' %}"></script>
-    {% if debug %}
-        <script src="{% static 'libs/offline-simulate-ui.min.js' %}"></script>
-    {% endif %}
     {% endcompress %}
     {% block extra-js %}{% endblock %}
 </body>
