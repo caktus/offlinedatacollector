@@ -1,7 +1,6 @@
 import shutil
 import unittest
 
-from django.contrib.auth.models import User
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import override_settings
 
@@ -9,6 +8,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.ui import WebDriverWait
+
+from . import factories
 
 
 @unittest.skipUnless(shutil.which('phantomjs'), 'PhantomJS is not installed')
@@ -29,7 +30,7 @@ class FunctionalTests(StaticLiveServerTestCase):
     def setUp(self):
         self.username = 'test'
         self.password = 'test'
-        User.objects.create_user(self.username, '', self.password)
+        factories.UserFactory.create(username=self.username, password=self.password)
 
     def test_show_login(self):
         """The login should be shown on page load."""
