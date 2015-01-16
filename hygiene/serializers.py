@@ -21,7 +21,8 @@ class CleaningSerializer(HATEOASMixin, serializers.ModelSerializer):
     """Cleaning serialization."""
 
     completed = serializers.BooleanField(required=False, default=False)
+    links = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Cleaning
-        fields = ('user', 'completed', )
+        fields = ('id', 'completed', 'date', 'links', )
