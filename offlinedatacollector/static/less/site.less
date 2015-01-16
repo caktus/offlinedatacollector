@@ -1,3 +1,70 @@
 /*
 *   Site Styles
 */
+
+@import '../libs/lesshat.less';
+
+@bodyBackground: #000;
+@contentBackground: #FFF;
+@errorHighlight: #FF0000;
+
+* {
+    font-family: Verdana, Geneva, sans-serif;
+}
+
+body {
+    background: @bodyBackground;
+}
+
+.container {
+    margin: 5em auto 0;
+    padding: 20px;
+    width: 50%;
+    background: @contentBackground;
+}
+
+.error {
+    margin: 10px 0;
+    width: 90%;
+    padding: 10px 5px;
+    background: @errorHighlight;
+    color: @contentBackground;
+}
+
+#login {
+    label, input {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    label.required:after {
+        content: '*';
+        color: @errorHighlight;
+        margin-left: 2px;
+    }
+
+    input {
+        width: 90%;
+        padding: 5px;
+        background: darken(@contentBackground, 5);
+    }
+
+    button {
+        padding: 5px 10px;
+        background: @bodyBackground;
+        color: @contentBackground;
+
+        &:hover {
+            background: @contentBackground;
+            color: @bodyBackground;
+        }
+    }
+}
+
+#collect {
+    display: none;
+}
+
+#results {
+    display: none;
+}

@@ -6,6 +6,7 @@ MODERNIZR_VERSION = 2.8.3
 JQUERY_VERSION = 1.11.2
 UNDERSCORE_VERSION = 1.7.0
 BACKBONE_VERSION = 1.1.2
+LESSHAT_VERSION = 3.0.2
 
 default: lint test
 
@@ -23,7 +24,7 @@ lint-py:
 lint-js:
 	# Check JS for any problems
 	# Requires jshint
-	find -name "*.js" -not -path "${STATIC_LIBS_DIR}*" -print0 | xargs -0 jshint
+	find -name "*.js" -not -path "${STATIC_LIBS_DIR}*" -not -path "./node_modules/*" -print0 | xargs -0 jshint
 
 lint: lint-py lint-js
 
@@ -54,6 +55,11 @@ $(STATIC_LIBS_DIR)/backbone.js: $(STATIC_LIBS_DIR)
 	wget https://cdnjs.cloudflare.com/ajax/libs/backbone.js/${BACKBONE_VERSION}/backbone.js -O $@
 
 LIBS += $(STATIC_LIBS_DIR)/backbone.js
+
+$(STATIC_LIBS_DIR)/lesshat.less: $(STATIC_LIBS_DIR)
+	wget https://raw.githubusercontent.com/madebysource/lesshat/v${LESSHAT_VERSION}/build/lesshat.less -O $@
+
+LIBS += $(STATIC_LIBS_DIR)/lesshat.less
 
 update-static-libs: $(LIBS)
 
