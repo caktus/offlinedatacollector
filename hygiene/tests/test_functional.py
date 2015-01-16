@@ -5,6 +5,8 @@ import unittest
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.test import override_settings
 
+from rest_framework.authtoken.models import Token
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
@@ -32,6 +34,8 @@ class FunctionalTests(StaticLiveServerTestCase):
         self.username = 'test'
         self.password = 'test'
         self.user = factories.UserFactory.create(username=self.username, password=self.password)
+        self.browser.get(self.live_server_url)
+        self.browser.execute_script('window.localStorage.removeItem("token");')
 
     def test_show_login(self):
         """The login should be shown on page load."""
@@ -114,3 +118,31 @@ class FunctionalTests(StaticLiveServerTestCase):
         collect = self.browser.find_element_by_id('collect')
         self.assertFalse(collect.is_displayed(), 'Question form should not be visible.')
         self.assertIn('2 days of cleaning in a row', results.text)
+
+    def test_client_state_show_form(self):
+        """Use existing token from localStorage if available. Show form if needed."""
+
+        token, _ = Token.objects.get_or_create(user=self.user)
+        self.browser.execute_script('localStorage.token = "%s";' % token.key)
+        self.browser.get(self.live_server_url)
+        form = self.browser.find_element_by_id('login')
+        self.assertFalse(form.is_displayed(), 'Login form shouldn not be visible.')
+        collect = self.browser.find_element_by_id('collect')
+        self.assertTrue(collect.is_displayed(), 'Question form should be visible.')
+        results = self.browser.find_element_by_id('results')
+        self.assertFalse(results.is_displayed(), 'Results should not be visible.')
+
+    def test_client_state_show_results(self):
+        """Use existing token from localStorage if available. Show results if already answered."""
+
+        token, _ = Token.objects.get_or_create(user=self.user)
+        self.browser.execute_script('localStorage.token = "%s";' % token.key)
+        factories.CleaningFactory.create(
+            user=self.user, date=datetime.date.today())
+        self.browser.get(self.live_server_url)
+        form = self.browser.find_element_by_id('login')
+        self.assertFalse(form.is_displayed(), 'Login form shouldn not be visible.')
+        collect = self.browser.find_element_by_id('collect')
+        self.assertFalse(collect.is_displayed(), 'Question form should not be visible.')
+        results = self.browser.find_element_by_id('results')
+        self.assertTrue(results.is_displayed(), 'Results should be visible.')

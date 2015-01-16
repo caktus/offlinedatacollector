@@ -25,6 +25,17 @@
         },
         fail: function () {
             this.$el.prepend('<p class="error">Invalid username/password</p>');
+        },
+        render: function () {
+            var token = localStorage.token;
+            if (token) {
+                this.login({token: token});
+            } else {
+                this.$el.show();
+                this.listenToOnce(this, 'login', function (value) {
+                    localStorage.token = value;
+                });
+            }
         }
     });
 

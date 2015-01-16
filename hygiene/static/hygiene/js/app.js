@@ -18,6 +18,8 @@ var config = (function ($, Backbone, _) {
                 }
             }});
         });
+
+        loginView.render();
     });
 
     return JSON.parse($('#config').text());
