@@ -24,16 +24,17 @@ def cache_manifest(request):
     cache_folder = settings.COMPRESS_OUTPUT_DIR
     for folder in [item for sublist in storage.listdir(cache_folder) for item in sublist]:
         asset_prefix = os.path.join(cache_folder, folder)
-        if os.path.isdir(os.path.join(settings.STATIC_ROOT, asset_prefix)):
+        static_path = os.path.join(settings.STATIC_ROOT, asset_prefix)
+        if os.path.isdir(static_path):
             # Example 2 deep asset
             # CACHE/css/asset.css
             for item in [item for sublist in storage.listdir(asset_prefix) for item in sublist]:
                 asset_path = os.path.join(asset_prefix, item)
-                cache_list.append(asset_path)
+                cache_list.append(os.path.join(settings.STATIC_URL, asset_path))
         else:
             # Capture 1 deep assets
             # CACHE asset.css
-            cache_list.append(asset_prefix)
+            cache_list.append(os.path.join(settings.STATIC_URL, asset_prefix))
 
     # calculate the revision based on the filenames in the cache list
     text = bytes("".join(cache_list), 'utf-8')
