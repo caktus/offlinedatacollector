@@ -24,7 +24,7 @@ lint-py:
 lint-js:
 	# Check JS for any problems
 	# Requires jshint
-	find -name "*.js" -not -path "${STATIC_LIBS_DIR}*" -print0 | xargs -0 jshint
+	find -name "*.js" -not -path "${STATIC_LIBS_DIR}*" -not -path "./node_modules/*" -print0 | xargs -0 jshint
 
 lint: lint-py lint-js
 
