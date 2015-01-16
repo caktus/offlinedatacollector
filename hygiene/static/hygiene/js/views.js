@@ -31,7 +31,7 @@
             if (token) {
                 this.login({token: token});
             } else {
-                this.$el.show();
+                this.$el.fadeIn();
                 this.listenToOnce(this, 'login', function (value) {
                     localStorage.token = value;
                 });
@@ -56,7 +56,7 @@
             });
         },
         render: function () {
-            this.$el.show();
+            this.$el.fadeIn();
         },
         success: function (model) {
             // TODO: Add messaging to the user
@@ -79,10 +79,16 @@
             }
         },
         render: function () {
-            var context = {count: this.collection.currentStreak()},
-                html = this.template(context);
-            $('.streak', this.$el).html(html);
-            this.$el.show();
+            var streak = this.collection.currentStreak(),
+                html = this.template({count: streak}),
+                msg = $('.count', this.$el);
+            msg.html(html);
+            if (streak === 0) {
+                msg.addClass('empty');
+            } else {
+                 msg.removeClass('empty');
+            }
+            this.$el.fadeIn();
         }
     });
 

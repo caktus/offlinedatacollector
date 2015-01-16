@@ -7,13 +7,13 @@
 @bodyBackground: #000;
 @contentBackground: #FFF;
 @errorHighlight: #FF0000;
-
-* {
-    font-family: Verdana, Geneva, sans-serif;
-}
+@postiveHighlight: #000;
+@negativeHighlight: #FF0000;
 
 body {
+    font-family: Verdana, Geneva, sans-serif;
     background: @bodyBackground;
+    font-size: 18px;
 }
 
 .container {
@@ -21,6 +21,10 @@ body {
     padding: 20px;
     width: 50%;
     background: @contentBackground;
+
+    h1 {
+        text-align: center;
+    }
 }
 
 .error {
@@ -32,6 +36,8 @@ body {
 }
 
 #login {
+    display: none;
+
     label, input {
         display: block;
         margin-bottom: 10px;
@@ -61,10 +67,53 @@ body {
     }
 }
 
-#collect {
+#collect, #results {
     display: none;
+    text-align: center;
+
+    h3 {
+        font-size: 1.6em;
+    }
+}
+
+#collect {
+
+    button {
+        font-size: 1.8em;
+        padding: 25px 50px;
+        margin: 10px 20px;
+
+        &[name="yes"] {
+            background: @postiveHighlight;
+            color: @contentBackground;
+
+            &:hover {
+                background: @contentBackground;
+                color: @bodyBackground;
+            }
+        }
+
+        &[name="no"] {
+            background: @negativeHighlight;
+            color: @contentBackground;
+
+            &:hover {
+                background: @negativeHighlight;
+                color: @bodyBackground;
+            }
+        }
+    }
 }
 
 #results {
-    display: none;
+    .streak {
+        font-size: 1.2em;
+
+        .count {
+            text-decoration: underline;
+            &.empty {
+                color: @negativeHighlight;
+            }
+        }
+    }
 }
