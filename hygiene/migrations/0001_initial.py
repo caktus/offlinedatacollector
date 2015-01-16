@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             name='Cleaning',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('completed', models.BooleanField(default=False, help_text=b'Did you clean?')),
+                ('completed', models.BooleanField(default=False, help_text='Did you clean?')),
                 ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
             ],
             options={
