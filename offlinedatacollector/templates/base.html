@@ -18,6 +18,10 @@
     <link rel="stylesheet" type="text/less" media="all" href="{% static 'less/site.less' %}">
     {% endcompress %}
     {% endif %}
+    {% compress css %}
+    <link rel="stylesheet" type="text/css" media="all" href="{% static 'css/offline-theme-slide.css' %}">
+    <link rel="stylesheet" type="text/css" media="all" href="{% static 'css/offline-language-english.css' %}">
+    {% endcompress %}
     {% block extra-css %}{% endblock %}
     {% compress js %}
     <script src="{% static 'libs/modernizr.js' %}"></script>
@@ -31,7 +35,11 @@
     <script src="{% static 'libs/jquery.js' %}"></script>
     <script src="{% static 'libs/underscore.js' %}"></script>
     <script src="{% static 'libs/backbone.js' %}"></script>
+    <script src="{% static 'libs/offline.min.js' %}"></script>
     <script src="{% static 'js/site.js' %}"></script>
+    {% if debug %}
+        <script src="{% static 'libs/offline-simulate-ui.min.js' %}"></script>
+    {% endif %}
     {% endcompress %}
     {% block extra-js %}{% endblock %}
 </body>

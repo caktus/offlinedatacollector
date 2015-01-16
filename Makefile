@@ -7,6 +7,7 @@ JQUERY_VERSION = 1.11.2
 UNDERSCORE_VERSION = 1.7.0
 BACKBONE_VERSION = 1.1.2
 LESSHAT_VERSION = 3.0.2
+OFFLINE_VERSION = 0.7.11
 
 default: lint test
 
@@ -56,6 +57,11 @@ $(STATIC_LIBS_DIR)/backbone.js: $(STATIC_LIBS_DIR)
 
 LIBS += $(STATIC_LIBS_DIR)/backbone.js
 
+$(STATIC_LIBS_DIR)/offline.min.js: $(STATIC_LIBS_DIR)
+	wget https://raw.githubusercontent.com/HubSpot/offline/v$(OFFLINE_VERSION)/offline.min.js -O $@
+
+LIBS += $(STATIC_LIBS_DIR)/offline.min.js
+
 $(STATIC_LIBS_DIR)/lesshat.less: $(STATIC_LIBS_DIR)
 	wget https://raw.githubusercontent.com/madebysource/lesshat/v${LESSHAT_VERSION}/build/lesshat.less -O $@
 
@@ -81,7 +87,7 @@ conf/pillar/%/secrets.sls: conf/pillar/%/deploy.pub
 	@sed -i "s/DB_PASSWORD: XXXXXX/DB_PASSWORD: `strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 24 | tr -d '\n'; echo`/" $@
 	@sed -i "s/BROKER_PASSWORD: XXXXXX/BROKER_PASSWORD: `strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 24 | tr -d '\n'; echo`/" $@
 	@sed -i "s/SECRET_KEY: XXXXXX/SECRET_KEY: `strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 64 | tr -d '\n'; echo`/" $@
-	
+
 bootstrap-pillars: conf/pillar/staging/secrets.sls conf/pillar/production/secrets.sls
 
 .PHONY: default test lint lint-py lint-js generate-secret
