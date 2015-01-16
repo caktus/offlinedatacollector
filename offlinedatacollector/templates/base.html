@@ -1,7 +1,7 @@
 {% load compress %}
 {% load static from staticfiles %}
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="en" class="no-js" manifest="{% url 'cache-manifest' %}">
 <head>
     <meta charset="utf-8">
     <title>{% block title %}Offline Data Collection Example{% endblock %}</title>

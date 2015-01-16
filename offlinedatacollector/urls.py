@@ -18,5 +18,5 @@ urlpatterns = [
     url(r'^api/token/', obtain_auth_token, name='api-token'),
     url(r'^$', views.index, name='homepage'),
     url(r'^connection-test/$', views.connection_test, name='connection-test'),
-
+    url(r'^manifest\.appcache$', views.cache_manifest, name='cache-manifest'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
