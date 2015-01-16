@@ -67,7 +67,6 @@ $(STATIC_LIBS_DIR)/lesshat.less: $(STATIC_LIBS_DIR)
 
 LIBS += $(STATIC_LIBS_DIR)/lesshat.less
 
-
 update-static-libs: $(LIBS)
 
 generate-secret: length = 32

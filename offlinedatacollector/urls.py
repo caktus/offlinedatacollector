@@ -17,4 +17,6 @@ urlpatterns = [
     url(r'^api/login/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/token/', obtain_auth_token, name='api-token'),
     url(r'^$', views.index, name='homepage'),
+    url(r'^connection-test/$', views.connection_test, name='connection-test'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
