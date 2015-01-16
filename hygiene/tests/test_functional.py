@@ -72,3 +72,25 @@ class FunctionalTests(StaticLiveServerTestCase):
         self.assertEqual('Invalid username/password', error.text)
         form = self.browser.find_element_by_id('login')
         self.assertTrue(form.is_displayed(), 'Login form should still be visible.')
+
+    def test_submit_yes(self):
+        """After login, click a button to record today's result as completed."""
+
+        self.login(self.username, self.password)
+        collect = WebDriverWait(self.browser, 5).until(
+            expected_conditions.visibility_of_element_located((By.ID, 'collect')))
+        yes = collect.find_element_by_name('yes')
+        yes.click()
+        self.browser.implicitly_wait(0.5)
+        self.assertTrue(collect.is_displayed(), 'Question form should no longer be visible')
+
+    def test_submit_no(self):
+        """After login, click a button to record today's result as not completed."""
+
+        self.login(self.username, self.password)
+        collect = WebDriverWait(self.browser, 5).until(
+            expected_conditions.visibility_of_element_located((By.ID, 'collect')))
+        no = collect.find_element_by_name('no')
+        no.click()
+        self.browser.implicitly_wait(0.5)
+        self.assertTrue(collect.is_displayed(), 'Question form should no longer be visible')
