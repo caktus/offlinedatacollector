@@ -8,7 +8,7 @@ var config = (function ($, Backbone, _) {
 
         loginView.on('login', function (token) {
             $.ajaxPrefilter(function (settings, options, xhr) {
-                xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+                xhr.setRequestHeader('Authorization', 'Token ' + token);
             });
             // TODO: Determine if question or results should be shown
             formView.render();
