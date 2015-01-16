@@ -11,8 +11,12 @@ var config = (function ($, Backbone, _) {
             $.ajaxPrefilter(function (settings, options, xhr) {
                 xhr.setRequestHeader('Authorization', 'Token ' + token);
             });
-            // TODO: Determine if question or results should be shown
-            formView.render();
+            cleanings.fetch({success: function () {
+                var today = new Date();
+                if (!cleanings.getForDate(today)) {
+                    formView.render();
+                }
+            }});
         });
     });
 

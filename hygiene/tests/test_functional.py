@@ -1,3 +1,4 @@
+import datetime
 import shutil
 import unittest
 
@@ -30,7 +31,7 @@ class FunctionalTests(StaticLiveServerTestCase):
     def setUp(self):
         self.username = 'test'
         self.password = 'test'
-        factories.UserFactory.create(username=self.username, password=self.password)
+        self.user = factories.UserFactory.create(username=self.username, password=self.password)
 
     def test_show_login(self):
         """The login should be shown on page load."""
@@ -83,6 +84,8 @@ class FunctionalTests(StaticLiveServerTestCase):
         yes.click()
         self.browser.implicitly_wait(0.5)
         self.assertTrue(collect.is_displayed(), 'Question form should no longer be visible')
+        results = self.browser.find_element_by_id('results')
+        self.assertIn('1 day of cleaning in a row', results.text)
 
     def test_submit_no(self):
         """After login, click a button to record today's result as not completed."""
@@ -94,3 +97,20 @@ class FunctionalTests(StaticLiveServerTestCase):
         no.click()
         self.browser.implicitly_wait(0.5)
         self.assertTrue(collect.is_displayed(), 'Question form should no longer be visible')
+        results = self.browser.find_element_by_id('results')
+        self.assertIn('0 days of cleaning in a row', results.text)
+
+    def test_render_results(self):
+        """If the user has already answered for today they should see the streak."""
+
+        factories.CleaningFactory.create(
+            user=self.user, date=datetime.date.today() - datetime.timedelta(days=1),
+            completed=True)
+        factories.CleaningFactory.create(
+            user=self.user, date=datetime.date.today(), completed=True)
+        self.login(self.username, self.password)
+        results = WebDriverWait(self.browser, 5).until(
+            expected_conditions.visibility_of_element_located((By.ID, 'results')))
+        collect = self.browser.find_element_by_id('collect')
+        self.assertFalse(collect.is_displayed(), 'Question form should not be visible.')
+        self.assertIn('2 days of cleaning in a row', results.text)
