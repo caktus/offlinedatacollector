@@ -1,9 +1,13 @@
 /* global jQuery, Backbone, _, config */
 (function ($, Backbone, _, config) {
 
+    function getDatePart(date) {
+        return date.toISOString().replace(/T.*/g, '');
+    }
+
     function getTodayString() {
         var today = new Date();
-        return today.toISOString().replace(/T.*/g, '');
+        return getDatePart(today);
     }
 
     var Cleaning = Backbone.Model.extend({
@@ -33,6 +37,7 @@
     config.collections.Cleanings = Backbone.Collection.extend({
         model: Cleaning,
         url: config.api,
+        comparator: 'date',
         parse: function (response) {
             this._next = response.next;
             this._previous = response.previous;
@@ -40,7 +45,21 @@
             return response.results || [];
         },
         currentStreak: function () {
-            return 4;
+            var streak = 0,
+                found = true,
+                current = new Date();
+            while (found) {
+                found = this.findWhere({date: getDatePart(current)});
+                if (found) {
+                    if (found.get('completed')) {
+                        streak = streak + 1;
+                    } else {
+                        found = false;
+                    }
+                    current.setDate(current.getDate() - 1);
+                }
+            }
+            return streak;
         }
     });
 
