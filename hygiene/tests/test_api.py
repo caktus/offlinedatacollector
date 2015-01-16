@@ -28,10 +28,10 @@ class CleaningAPITestCase(APITestCase):
         """Read cleanings. Can only see their own records."""
 
         cleaning = factories.CleaningFactory.create(user=self.user)
-        other = factories.CleaningFactory.create()
+        factories.CleaningFactory.create()
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        expected = [cleaning.pk ]
+        expected = [cleaning.pk, ]
         found = sorted(map(lambda x: x['id'], response.data['results']))
         self.assertEqual(found, expected)
 
@@ -75,7 +75,7 @@ class CleaningAPITestCase(APITestCase):
 
     def test_add(self):
         """Add new cleaning record."""
-    
+
         data = {
             'completed': False,
             'date': datetime.date.today().isoformat(),
@@ -89,7 +89,7 @@ class CleaningAPITestCase(APITestCase):
 
     def test_add_duplicate(self):
         """Attempt to add a duplicate record: same date and user."""
-    
+
         cleaning = factories.CleaningFactory.create(user=self.user)
         data = {
             'completed': False,
@@ -100,7 +100,7 @@ class CleaningAPITestCase(APITestCase):
 
     def test_delete(self):
         """Delete cleaning record."""
-    
+
         cleaning = factories.CleaningFactory.create(user=self.user)
         url = reverse('cleaning-detail', kwargs={'pk': cleaning.pk})
         response = self.client.delete(url)

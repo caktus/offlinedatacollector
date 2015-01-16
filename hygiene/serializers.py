@@ -29,7 +29,7 @@ class CleaningSerializer(HATEOASMixin, serializers.ModelSerializer):
 
     def validate_date(self, value):
         """Validate date/user uniqueness."""
-        
+
         request = self.context['request']
         qs = models.Cleaning.objects.filter(user=request.user, date=value)
         if self.instance and self.instance.pk:
