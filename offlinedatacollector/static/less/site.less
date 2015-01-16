@@ -6,6 +6,7 @@
 
 @bodyBackground: #000;
 @contentBackground: #FFF;
+@errorHighlight: #FF0000;
 
 * {
     font-family: Verdana, Geneva, sans-serif;
@@ -20,6 +21,14 @@ body {
     margin: 0 auto;
 }
 
+.error {
+    margin: 10px 0;
+    width: 90%;
+    padding: 10px 5px;
+    background: @errorHighlight;
+    color: @contentBackground;
+}
+
 #login {
     margin: 10em auto 0;
     padding: 20px;
@@ -32,8 +41,10 @@ body {
         margin-bottom: 10px;
     }
 
-    label, input {
-        margin-bottom: 10px;
+    label.required:after {
+        content: '*';
+        color: @errorHighlight;
+        margin-left: 2px;
     }
 
     input {

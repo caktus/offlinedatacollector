@@ -4,9 +4,9 @@
 
 {% block content %}
     <form id="login" action="{% url 'api-token' %}" method="post">
-        <label for="id_username">Username</label>
+        <label for="id_username" class="required">Username</label>
         <input id="id_username" type="text" name="username" maxlength="30" required />
-        <label for="id_password">Password</label>
+        <label for="id_password" class="required">Password</label>
         <input id="id_password" type="password" name="password" required />
         <button type="submit">Login</button>
     </form>
